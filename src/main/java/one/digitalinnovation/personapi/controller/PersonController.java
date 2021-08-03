@@ -1,11 +1,11 @@
 package one.digitalinnovation.personapi.controller;
 
+import one.digitalinnovation.personapi.dto.MessagePersonDTO;
 import one.digitalinnovation.personapi.dto.request.PersonDTO;
+import one.digitalinnovation.personapi.exception.PersonNotFoundException;
 import one.digitalinnovation.personapi.service.PersonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import one.digitalinnovation.personapi.dto.MessagePersonDTO;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -22,13 +22,19 @@ public class PersonController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MessagePersonDTO createPerson(@RequestBody @Valid PersonDTO personDTO){
+    public MessagePersonDTO createPerson(@RequestBody @Valid PersonDTO personDTO) {
 
         return personService.createPerson(personDTO);
     }
 
     @GetMapping
-    public List<PersonDTO> listAll(){
+    public List<PersonDTO> listAll() {
         return personService.listAll();
+
+    }
+
+    @GetMapping("/{id}")
+    public PersonDTO findByIDd(@PathVariable Long id) throws PersonNotFoundException {
+        return personService.findById(id);
     }
 }
