@@ -1,6 +1,6 @@
 package one.digitalinnovation.personapi.controller;
 
-import one.digitalinnovation.personapi.dto.MessagePersonDTO;
+import one.digitalinnovation.personapi.dto.response.MessageResponseDTO;
 import one.digitalinnovation.personapi.dto.request.PersonDTO;
 import one.digitalinnovation.personapi.exception.PersonNotFoundException;
 import one.digitalinnovation.personapi.service.PersonService;
@@ -22,7 +22,7 @@ public class PersonController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MessagePersonDTO createPerson(@RequestBody @Valid PersonDTO personDTO) {
+    public MessageResponseDTO createPerson(@RequestBody @Valid PersonDTO personDTO) {
 
         return personService.createPerson(personDTO);
     }
@@ -43,4 +43,10 @@ public class PersonController {
     public void deleteById(@PathVariable Long id) throws PersonNotFoundException {
         personService.delete(id);
     }
+
+    @PutMapping("/{id}")
+    public MessageResponseDTO updateById(@PathVariable Long id, @RequestBody @Valid PersonDTO personDTO) throws PersonNotFoundException {
+        return personService.update(id, personDTO);
+    }
+
 }
